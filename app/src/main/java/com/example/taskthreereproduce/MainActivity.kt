@@ -39,8 +39,39 @@ class MainActivity : ComponentActivity() {
             }
         }
 //        getStarted()
-        dataStoreSetupGuide()
+//        dataStoreSetupGuide()
+        dataStoreManipulatingDataGuide()
     }
+}
+
+fun dataStoreManipulatingDataGuide() {
+//    val post = Post.builder()
+//        .title("My First Post")
+//        .status(PostStatus.ACTIVE)
+//        .rating(10)
+//        .build()
+//    Amplify.DataStore.save(post,
+//        { Log.i("MyAmplifyApp", "Saved a post") },
+//        { Log.e("MyAmplifyApp", "Saved failed", it) }
+//    )
+
+    Amplify.DataStore.query(Post::class.java, Where.identifier(Post::class.java, "123"),
+        { matches ->
+            if(matches.hasNext()) {
+                val original = matches.next()
+                val edited = original.copyOfBuilder()
+                    .title("New Title")
+                    .build()
+                Amplify.DataStore.save(edited,
+                    { Log.i("MyAmplifyApp", "Updated a post") },
+                    { Log.e("MyAmplifyApp", "Update failed", it) }
+                )
+            }
+        },
+        {
+            Log.e("MyAmplifyApp", "Query failed", it)
+        }
+    )
 }
 
 fun dataStoreSetupGuide() {
