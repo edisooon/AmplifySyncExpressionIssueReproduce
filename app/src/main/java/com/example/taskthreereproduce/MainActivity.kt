@@ -115,6 +115,20 @@ class MainActivity : ComponentActivity() {
 //                Log.e("Tutorial", "Query failed.", it)
 //            }
 //        )
+
+        Amplify.DataStore.observe(Todo::class.java,
+            { Log.i("Tutorial", "Observation began") },
+            {
+                val todo = it.item()
+                Log.i("Tutorial", "Todo: $todo")
+            },
+            {
+                Log.e("Tutorial", "Observation failed", it)
+            },
+            {
+                Log.i("Tutorial", "Observation complete")
+            }
+        )
     }
 }
 
