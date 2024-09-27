@@ -30,6 +30,7 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -50,7 +51,10 @@ android {
 }
 
 dependencies {
-
+    // Amplify API and Datastore dependencies
+    implementation("com.amplifyframework:aws-api:2.19.1")
+    implementation("com.amplifyframework:aws-datastore:2.19.1")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
