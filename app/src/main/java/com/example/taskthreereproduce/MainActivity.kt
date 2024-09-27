@@ -55,6 +55,22 @@ fun dataStoreManipulatingDataGuide() {
 //        { Log.e("MyAmplifyApp", "Saved failed", it) }
 //    )
 
+//    Amplify.DataStore.query(Post::class.java,
+//        { matches ->
+//            while(matches.hasNext()) {
+//                val post = matches.next()
+//                Log.i("MyAmplifyApp", "=== query result ===")
+//                Log.i("MyAmplifyApp", "Post name: ${post.title}")
+//                Log.i("MyAmplifyApp", "Post status: ${post.status}")
+//                post.rating?.let { Log.i("MyAmplifyApp", "Post rating: ${post.rating}") }
+//                post.content?.let { Log.i("MyAmplifyApp", "Post content: ${post.content}") }
+//            }
+//        },
+//        {
+//            Log.e("MyAmplifyApp", "Query failed", it)
+//        }
+//    )
+
 //    Amplify.DataStore.query(Post::class.java, Where.identifier(Post::class.java, "123"),
 //        { matches ->
 //            if(matches.hasNext()) {
@@ -73,21 +89,42 @@ fun dataStoreManipulatingDataGuide() {
 //        }
 //    )
 
-    Amplify.DataStore.query(Post::class.java, Where.identifier(Post::class.java, "123"),
-        { matches ->
-            if (matches.hasNext()) {
-                val post = matches.next()
-                Amplify.DataStore.delete(post,
-                    {Log.i("MyAmplifyApp", "Deleted a post.")},
-                    {Log.e("MyAmplifyApp", "Delete failed.", it)
-                    }
-                )
-            }
-        },
-        {
-            Log.e("MyAmplifyApp", "Query Failed.", it)
-        }
-    )
+//    Amplify.DataStore.query(Post::class.java, Where.identifier(Post::class.java, "123"),
+//        { matches ->
+//            if (matches.hasNext()) {
+//                val post = matches.next()
+//                Amplify.DataStore.delete(post,
+//                    {Log.i("MyAmplifyApp", "Deleted a post.")},
+//                    {Log.e("MyAmplifyApp", "Delete failed.", it)
+//                    }
+//                )
+//            }
+//        },
+//        {
+//            Log.e("MyAmplifyApp", "Query Failed.", it)
+//        }
+//    )
+
+//    Amplify.DataStore.query(Post::class.java,
+//        { matches ->
+//            if (matches.hasNext()) {
+//                val post = matches.next()
+//                Amplify.DataStore.delete(post, Where.matches(Post.RATING.gt(4)).queryPredicate,
+//                    {
+//                        Log.i("MyAmplifyApp", "Deleted a post.")
+//                    },
+//                    {
+//                        Log.e("MyAmplifyApp", "Delete failed.", it)
+//                    }
+//                )
+//            }
+//        },
+//        {
+//            Log.e("MyAmplifyApp", "Query Failed.", it)
+//        }
+//    )
+
+    
 }
 
 fun dataStoreSetupGuide() {
