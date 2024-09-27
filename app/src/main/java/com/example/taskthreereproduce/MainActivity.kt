@@ -55,21 +55,37 @@ fun dataStoreManipulatingDataGuide() {
 //        { Log.e("MyAmplifyApp", "Saved failed", it) }
 //    )
 
+//    Amplify.DataStore.query(Post::class.java, Where.identifier(Post::class.java, "123"),
+//        { matches ->
+//            if(matches.hasNext()) {
+//                val original = matches.next()
+//                val edited = original.copyOfBuilder()
+//                    .title("New Title")
+//                    .build()
+//                Amplify.DataStore.save(edited,
+//                    { Log.i("MyAmplifyApp", "Updated a post") },
+//                    { Log.e("MyAmplifyApp", "Update failed", it) }
+//                )
+//            }
+//        },
+//        {
+//            Log.e("MyAmplifyApp", "Query failed", it)
+//        }
+//    )
+
     Amplify.DataStore.query(Post::class.java, Where.identifier(Post::class.java, "123"),
         { matches ->
-            if(matches.hasNext()) {
-                val original = matches.next()
-                val edited = original.copyOfBuilder()
-                    .title("New Title")
-                    .build()
-                Amplify.DataStore.save(edited,
-                    { Log.i("MyAmplifyApp", "Updated a post") },
-                    { Log.e("MyAmplifyApp", "Update failed", it) }
+            if (matches.hasNext()) {
+                val post = matches.next()
+                Amplify.DataStore.delete(post,
+                    {Log.i("MyAmplifyApp", "Deleted a post.")},
+                    {Log.e("MyAmplifyApp", "Delete failed.", it)
+                    }
                 )
             }
         },
         {
-            Log.e("MyAmplifyApp", "Query failed", it)
+            Log.e("MyAmplifyApp", "Query Failed.", it)
         }
     )
 }
