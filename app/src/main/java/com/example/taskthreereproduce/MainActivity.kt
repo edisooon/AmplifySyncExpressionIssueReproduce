@@ -51,20 +51,55 @@ class MainActivity : ComponentActivity() {
 //            { Log.i("Tutorial", "Saved item: ${item.name}") },
 //            { Log.e("Tutorial", "Could not save item to DataStore", it) }
 //        )
-        Amplify.DataStore.query(Todo::class.java, Where.matches(Todo.PRIORITY.eq(Priority.HIGH)),
-            { todos ->
-                while (todos.hasNext()) {
-                    val todo: Todo = todos.next()
-                    Log.i("Tutorial", "==== Todo ====")
-                    Log.i("Tutorial", "Name: ${todo.name}")
-                    todo.priority?.let { todoPriority -> Log.i("Tutorial", "Priority: $todoPriority") }
-                    todo.completedAt?.let { todoCompletedAt -> Log.i("Tutorial", "CompletedAt: $todoCompletedAt") }
-                }
-            },
-            {
-                Log.e("Tutorial", "Could not query DataStore", it)
-            }
-        )
+
+//        Amplify.DataStore.query(Todo::class.java,
+//            { todos ->
+//                while (todos.hasNext()) {
+//                    val todo: Todo = todos.next()
+//                    Log.i("Tutorial", "==== Todo ====")
+//                    Log.i("Tutorial", "Name: ${todo.name}")
+//                    todo.priority?.let { todoPriority -> Log.i("Tutorial", "Priority: $todoPriority") }
+//                    todo.completedAt?.let { todoCompletedAt -> Log.i("Tutorial", "CompletedAt: $todoCompletedAt") }
+//                }
+//            },
+//            {
+//                Log.e("Tutorial", "Could not query DataStore", it)
+//            }
+//        )
+
+
+//        Amplify.DataStore.query(Todo::class.java, Where.matches(Todo.PRIORITY.eq(Priority.HIGH)),
+//            { todos ->
+//                while (todos.hasNext()) {
+//                    val todo: Todo = todos.next()
+//                    Log.i("Tutorial", "==== Todo ====")
+//                    Log.i("Tutorial", "Name: ${todo.name}")
+//                    todo.priority?.let { todoPriority -> Log.i("Tutorial", "Priority: $todoPriority") }
+//                    todo.completedAt?.let { todoCompletedAt -> Log.i("Tutorial", "CompletedAt: $todoCompletedAt") }
+//                }
+//            },
+//            {
+//                Log.e("Tutorial", "Could not query DataStore", it)
+//            }
+//        )
+
+//        Amplify.DataStore.query(Todo::class.java, Where.matches(Todo.NAME.eq("Finish quarterly taxes")),
+//            { matches ->
+//                if(matches.hasNext()) {
+//                    val todo = matches.next()
+//                    val updatedTodo = todo.copyOfBuilder()
+//                        .name("File quarterly taxes")
+//                        .build()
+//                    Amplify.DataStore.save(updatedTodo,
+//                        { Log.i("Tutorial", "Updated item: ${updatedTodo.name}") },
+//                        { Log.e("Tutorial", "Update failed.", it) }
+//                    )
+//                }
+//            },
+//            {
+//                Log.e("Tutorial", "Query failed", it)
+//            }
+//        )
     }
 }
 
