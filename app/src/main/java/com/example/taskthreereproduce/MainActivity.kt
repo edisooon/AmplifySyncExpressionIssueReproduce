@@ -100,6 +100,21 @@ class MainActivity : ComponentActivity() {
 //                Log.e("Tutorial", "Query failed", it)
 //            }
 //        )
+
+//        Amplify.DataStore.query(Todo::class.java, Where.matches(Todo.NAME.eq("File quarterly taxes")),
+//            { matches ->
+//                if (matches.hasNext()) {
+//                    val toDeleteTodo = matches.next()
+//                    Amplify.DataStore.delete(toDeleteTodo,
+//                        {Log.i("Tutorial", "Deleted item: $toDeleteTodo.name")},
+//                        {Log.e("Tutorial", "Deleted failed", it)}
+//                    )
+//                }
+//            },
+//            {
+//                Log.e("Tutorial", "Query failed.", it)
+//            }
+//        )
     }
 }
 
