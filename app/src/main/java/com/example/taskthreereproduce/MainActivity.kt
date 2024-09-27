@@ -63,7 +63,7 @@ fun dataStoreSetupGuide() {
 //        {
 //            Log.e("MyAmplifyApp", "Error retrieving posts", it)
 //        }
-    )
+//    )
 }
 
 fun getStarted() {
