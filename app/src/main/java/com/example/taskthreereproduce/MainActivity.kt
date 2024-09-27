@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.amplifyframework.core.Amplify
+import com.amplifyframework.core.model.query.Where
 import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.Priority
 import com.amplifyframework.datastore.generated.model.Todo
@@ -35,20 +36,34 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        val date = Date()
-        val offsetMillis = TimeZone.getDefault().getOffset(date.time).toLong()
-        val offsetSeconds = TimeUnit.MILLISECONDS.toSeconds(offsetMillis).toInt()
-        val temporalDateTime = Temporal.DateTime(date, offsetSeconds)
-        val item = Todo.builder()
-            .name("Finish quarterly taxes")
-            .priority(Priority.HIGH)
-            .completedAt(temporalDateTime)
-            .build()
-
-
-        Amplify.DataStore.save(item,
-            { Log.i("Tutorial", "Saved item: ${item.name}") },
-            { Log.e("Tutorial", "Could not save item to DataStore", it) }
+//        val date = Date()
+//        val offsetMillis = TimeZone.getDefault().getOffset(date.time).toLong()
+//        val offsetSeconds = TimeUnit.MILLISECONDS.toSeconds(offsetMillis).toInt()
+//        val temporalDateTime = Temporal.DateTime(date, offsetSeconds)
+//        val item = Todo.builder()
+//            .name("Finish quarterly taxes")
+//            .priority(Priority.HIGH)
+//            .completedAt(temporalDateTime)
+//            .build()
+//
+//
+//        Amplify.DataStore.save(item,
+//            { Log.i("Tutorial", "Saved item: ${item.name}") },
+//            { Log.e("Tutorial", "Could not save item to DataStore", it) }
+//        )
+        Amplify.DataStore.query(Todo::class.java, Where.matches(Todo.PRIORITY.eq(Priority.HIGH)),
+            { todos ->
+                while (todos.hasNext()) {
+                    val todo: Todo = todos.next()
+                    Log.i("Tutorial", "==== Todo ====")
+                    Log.i("Tutorial", "Name: ${todo.name}")
+                    todo.priority?.let { todoPriority -> Log.i("Tutorial", "Priority: $todoPriority") }
+                    todo.completedAt?.let { todoCompletedAt -> Log.i("Tutorial", "CompletedAt: $todoCompletedAt") }
+                }
+            },
+            {
+                Log.e("Tutorial", "Could not query DataStore", it)
+            }
         )
     }
 }
