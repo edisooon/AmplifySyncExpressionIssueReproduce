@@ -124,15 +124,40 @@ fun dataStoreManipulatingDataGuide() {
 //        }
 //    )
 
-    Amplify.DataStore.query(
-        Post::class.java,
-        Where.matches(
-            Post.RATING.gt(4).or(Post.STATUS.eq(PostStatus.ACTIVE))
-        ),
+//    Amplify.DataStore.query(
+//        Post::class.java,
+//        Where.matches(
+//            Post.RATING.gt(4).or(Post.STATUS.eq(PostStatus.ACTIVE))
+//        ),
+//        { posts ->
+//            while (posts.hasNext()) {
+//                val post = posts.next()
+//                Log.i("MyAmplifyApp", "Post: $post")
+//            }
+//        },
+//        {
+//            Log.e("MyAmplifyApp", "Query failed", it)
+//        }
+//    )
+
+//    Amplify.DataStore.query(Post::class.java,
+//        Where.sorted(Post.RATING.ascending()),
+//        { posts ->
+//            while(posts.hasNext()) {
+//                val post = posts.next()
+//                Log.i("MyAmplifyApp", "Title: ${post.title}")
+//            }
+//        },
+//        {
+//            Log.e("MyAmplifyApp", "Query failed", it)
+//        })
+
+    Amplify.DataStore.query(Post::class.java,
+        Where.sorted(Post.RATING.ascending(), Post.TITLE.descending()),
         { posts ->
             while (posts.hasNext()) {
                 val post = posts.next()
-                Log.i("MyAmplifyApp", "Post: $post")
+                Log.i("MyAmplifyApp", "Title: ${post.title}")
             }
         },
         {
