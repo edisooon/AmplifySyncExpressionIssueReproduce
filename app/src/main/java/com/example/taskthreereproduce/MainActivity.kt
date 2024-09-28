@@ -16,6 +16,7 @@ import com.amplifyframework.core.Amplify
 import com.amplifyframework.core.model.query.Page
 import com.amplifyframework.core.model.query.Where
 import com.amplifyframework.core.model.temporal.Temporal
+import com.amplifyframework.datastore.generated.model.Comment
 import com.amplifyframework.datastore.generated.model.Post
 import com.amplifyframework.datastore.generated.model.PostStatus
 import com.amplifyframework.datastore.generated.model.Priority
@@ -41,8 +42,35 @@ class MainActivity : ComponentActivity() {
         }
 //        getStarted()
 //        dataStoreSetupGuide()
-        dataStoreManipulatingDataGuide()
+//        dataStoreManipulatingDataGuide()
+        relationalModelsGuide()
     }
+}
+
+fun relationalModelsGuide() {
+    val post = Post.builder()
+        .title("My Post with comments")
+        .status(PostStatus.ACTIVE)
+        .rating(10)
+        .build()
+
+    val comment = Comment.builder()
+        .post(post)
+        .content("Loving Amplify DataStore!")
+        .build()
+
+    Amplify.DataStore.save(post,
+        {
+            Log.i("MyAmplifyApp", "Post saved")
+            Amplify.DataStore.save(comment,
+                { Log.i("MyAmplifyApp", "Comment Saved") },
+                { Log.e("MyAmplifyApp", "Comment not saved", it) }
+            )
+        },
+        {
+            Log.e("MyAmplifyApp", "Post not saved", it)
+        }
+    )
 }
 
 fun dataStoreManipulatingDataGuide() {
