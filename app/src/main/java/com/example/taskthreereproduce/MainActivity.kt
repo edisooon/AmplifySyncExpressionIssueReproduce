@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.amplifyframework.core.Amplify
+import com.amplifyframework.core.model.query.Page
 import com.amplifyframework.core.model.query.Where
 import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.Post
@@ -152,16 +153,29 @@ fun dataStoreManipulatingDataGuide() {
 //            Log.e("MyAmplifyApp", "Query failed", it)
 //        })
 
+//    Amplify.DataStore.query(Post::class.java,
+//        Where.sorted(Post.RATING.ascending(), Post.TITLE.descending()),
+//        { posts ->
+//            while (posts.hasNext()) {
+//                val post = posts.next()
+//                Log.i("MyAmplifyApp", "Title: ${post.title}")
+//            }
+//        },
+//        {
+//            Log.e("MyAmplifyApp", "Query failed", it)
+//        }
+//    )
+
     Amplify.DataStore.query(Post::class.java,
-        Where.sorted(Post.RATING.ascending(), Post.TITLE.descending()),
+        Where.matchesAll().paginated(Page.startingAt(0).withLimit(100)),
         { posts ->
-            while (posts.hasNext()) {
+            while(posts.hasNext()) {
                 val post = posts.next()
                 Log.i("MyAmplifyApp", "Title: ${post.title}")
             }
         },
         {
-            Log.e("MyAmplifyApp", "Query failed", it)
+            Log.e("MyAmplifyApp", "Query Failed", it)
         }
     )
 }
