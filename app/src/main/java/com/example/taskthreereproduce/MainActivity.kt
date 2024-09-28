@@ -45,84 +45,80 @@ class MainActivity : ComponentActivity() {
 //        getStarted()
 //        dataStoreSetupGuide()
 //        dataStoreManipulatingDataGuide()
-        relationalModelsGuide()
+//        relationalModelsGuide()
     }
 }
 
 fun relationalModelsGuide() {
-//    val post = Post.builder()
-//        .title("My Post with comments")
-//        .status(PostStatus.ACTIVE)
-//        .rating(10)
-//        .build()
-//
-//    val comment = Comment.builder()
-//        .post(post)
-//        .content("Loving Amplify DataStore!")
-//        .build()
-//
-//    Amplify.DataStore.save(post,
-//        {
-//            Log.i("MyAmplifyApp", "Post saved")
-//            Amplify.DataStore.save(comment,
-//                { Log.i("MyAmplifyApp", "Comment Saved") },
-//                { Log.e("MyAmplifyApp", "Comment not saved", it) }
-//            )
-//        },
-//        {
-//            Log.e("MyAmplifyApp", "Post not saved", it)
-//        }
-//    )
+    val post1 = Post.builder()
+        .title("My Post with comments")
+        .status(PostStatus.ACTIVE)
+        .rating(10)
+        .build()
 
-//    Amplify.DataStore.query(Comment::class.java, Post.STATUS.eq(PostStatus.ACTIVE),
-//        { matches ->
-//            while (matches.hasNext()) {
-//                val comment = matches.next()
-//                Log.i("MyAmplifyApp", "Content: ${comment.content}")
-//            }
-//        },
-//        {
-//            Log.e("MyAmplifyApp", "Query failed", it)
-//        }
-//    )
+    val comment = Comment.builder()
+        .post(post1)
+        .content("Loving Amplify DataStore!")
+        .build()
+    Amplify.DataStore.save(post1,
+        {
+            Log.i("MyAmplifyApp", "Post saved")
+            Amplify.DataStore.save(comment,
+                { Log.i("MyAmplifyApp", "Comment Saved") },
+                { Log.e("MyAmplifyApp", "Comment not saved", it) }
+            )
+        },
+        {
+            Log.e("MyAmplifyApp", "Post not saved", it)
+        }
+    )
 
-//    // if delete a parent object,
-//    // its children will be removed from the DataStore,
-//    // and the mutation would be synced to the cloud.
-//    Amplify.DataStore.query(Post::class.java, Where.identifier(Post::class.java, "123"),
-//        {
-//            if(it.hasNext()) {
-//                val post = it.next()
-//                Amplify.DataStore.delete(post,
-//                    {
-//                        Log.i("MyAmplifyApp", "Post deleted")
-//                    },
-//                    {
-//                        Log.e("MyAmplifyApp", "Delete failed")
-//                    }
-//                )
-//            }
-//        },
-//        {
-//            Log.e("MyAmplifyApp", "Query failed", it)
-//        }
-//    )
+    Amplify.DataStore.query(Comment::class.java, Post.STATUS.eq(PostStatus.ACTIVE),
+        { matches ->
+            while (matches.hasNext()) {
+                val comment = matches.next()
+                Log.i("MyAmplifyApp", "Content: ${comment.content}")
+            }
+        },
+        {
+            Log.e("MyAmplifyApp", "Query failed", it)
+        }
+    )
 
-    val post = Post.builder()
+    // if delete a parent object,
+    // its children will be removed from the DataStore,
+    // and the mutation would be synced to the cloud.
+    Amplify.DataStore.query(Post::class.java, Where.identifier(Post::class.java, "123"),
+        {
+            if(it.hasNext()) {
+                val post = it.next()
+                Amplify.DataStore.delete(post,
+                    {
+                        Log.i("MyAmplifyApp", "Post deleted")
+                    },
+                    {
+                        Log.e("MyAmplifyApp", "Delete failed")
+                    }
+                )
+            }
+        },
+        {
+            Log.e("MyAmplifyApp", "Query failed", it)
+        }
+    )
+
+    val post2 = Post.builder()
         .title("My First Post")
         .status(PostStatus.ACTIVE)
         .build()
-
     val editor = User.builder()
         .username("Nadia")
         .build()
-
     val postEditor = PostEditor.builder()
-        .post(post)
+        .post(post2)
         .user(editor)
         .build()
-
-    Amplify.DataStore.save(post,
+    Amplify.DataStore.save(post2,
         {
             Log.i("MyAmplifyApp", "Post saved")
             Amplify.DataStore.save(editor,
