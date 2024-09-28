@@ -1,5 +1,6 @@
 package com.amplifyframework.datastore.generated.model;
 
+import com.amplifyframework.core.model.annotations.HasMany;
 import com.amplifyframework.core.model.temporal.Temporal;
 import com.amplifyframework.core.model.ModelIdentifier;
 
@@ -31,6 +32,7 @@ public final class Post implements Model {
   private final @ModelField(targetType="PostStatus", isRequired = true) PostStatus status;
   private final @ModelField(targetType="Int") Integer rating;
   private final @ModelField(targetType="String") String content;
+  private final @ModelField(targetType="Comment") @HasMany(associatedWith = "post", type = Comment.class) List<Comment> comments = null;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   /** @deprecated This API is internal to Amplify and should not be used. */
@@ -57,6 +59,10 @@ public final class Post implements Model {
   
   public String getContent() {
       return content;
+  }
+  
+  public List<Comment> getComments() {
+      return comments;
   }
   
   public Temporal.DateTime getCreatedAt() {
