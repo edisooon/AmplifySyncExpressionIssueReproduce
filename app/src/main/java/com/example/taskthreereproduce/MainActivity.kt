@@ -276,26 +276,26 @@ fun dataStoreManipulatingDataGuide() {
 }
 
 fun dataStoreSetupGuide() {
-//    val post = Post.builder()
-//        .title("Create an Amplify DataStore app")
-//        .status(PostStatus.ACTIVE)
-//        .build()
-//    Amplify.DataStore.save(post,
-//        { Log.i("MyAmplifyApp", "Created a new post successfully") },
-//        { Log.e("MyAmplifyApp", "Error creating post", it) })
+    val post = Post.builder()
+        .title("Create an Amplify DataStore app")
+        .status(PostStatus.ACTIVE)
+        .build()
+    Amplify.DataStore.save(post,
+        { Log.i("MyAmplifyApp", "Created a new post successfully") },
+        { Log.e("MyAmplifyApp", "Error creating post", it) })
 
-//    Amplify.DataStore.query(Post::class.java,
-//        { matches ->
-//            if (matches.hasNext()) {
-//                Log.i("MyAmplifyApp", "Successful query, found posts.")
-//            }else{
-//                Log.i("MyAmplifyApp", "Successful query, but no posts")
-//            }
-//        },
-//        {
-//            Log.e("MyAmplifyApp", "Error retrieving posts", it)
-//        }
-//    )
+    Amplify.DataStore.query(Post::class.java,
+        { matches ->
+            if (matches.hasNext()) {
+                Log.i("MyAmplifyApp", "Successful query, found posts.")
+            }else{
+                Log.i("MyAmplifyApp", "Successful query, but no posts")
+            }
+        },
+        {
+            Log.e("MyAmplifyApp", "Error retrieving posts", it)
+        }
+    )
 }
 
 fun getStarted() {
