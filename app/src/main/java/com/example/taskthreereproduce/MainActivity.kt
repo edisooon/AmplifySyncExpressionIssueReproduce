@@ -48,29 +48,64 @@ class MainActivity : ComponentActivity() {
 }
 
 fun relationalModelsGuide() {
-    val post = Post.builder()
-        .title("My Post with comments")
-        .status(PostStatus.ACTIVE)
-        .rating(10)
-        .build()
+//    val post = Post.builder()
+//        .title("My Post with comments")
+//        .status(PostStatus.ACTIVE)
+//        .rating(10)
+//        .build()
+//
+//    val comment = Comment.builder()
+//        .post(post)
+//        .content("Loving Amplify DataStore!")
+//        .build()
+//
+//    Amplify.DataStore.save(post,
+//        {
+//            Log.i("MyAmplifyApp", "Post saved")
+//            Amplify.DataStore.save(comment,
+//                { Log.i("MyAmplifyApp", "Comment Saved") },
+//                { Log.e("MyAmplifyApp", "Comment not saved", it) }
+//            )
+//        },
+//        {
+//            Log.e("MyAmplifyApp", "Post not saved", it)
+//        }
+//    )
 
-    val comment = Comment.builder()
-        .post(post)
-        .content("Loving Amplify DataStore!")
-        .build()
+//    Amplify.DataStore.query(Comment::class.java, Post.STATUS.eq(PostStatus.ACTIVE),
+//        { matches ->
+//            while (matches.hasNext()) {
+//                val comment = matches.next()
+//                Log.i("MyAmplifyApp", "Content: ${comment.content}")
+//            }
+//        },
+//        {
+//            Log.e("MyAmplifyApp", "Query failed", it)
+//        }
+//    )
 
-    Amplify.DataStore.save(post,
+    // if delete a parent object,
+    // its children will be removed from the DataStore,
+    // and the mutation would be synced to the cloud.
+    Amplify.DataStore.query(Post::class.java, Where.identifier(Post::class.java, "123"),
         {
-            Log.i("MyAmplifyApp", "Post saved")
-            Amplify.DataStore.save(comment,
-                { Log.i("MyAmplifyApp", "Comment Saved") },
-                { Log.e("MyAmplifyApp", "Comment not saved", it) }
-            )
+            if(it.hasNext()) {
+                val post = it.next()
+                Amplify.DataStore.delete(post,
+                    {
+                        Log.i("MyAmplifyApp", "Post deleted")
+                    },
+                    {
+                        Log.e("MyAmplifyApp", "Delete failed")
+                    }
+                )
+            }
         },
         {
-            Log.e("MyAmplifyApp", "Post not saved", it)
+            Log.e("MyAmplifyApp", "Query failed", it)
         }
     )
+
 }
 
 fun dataStoreManipulatingDataGuide() {
