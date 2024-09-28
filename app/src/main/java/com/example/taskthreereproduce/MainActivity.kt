@@ -18,9 +18,11 @@ import com.amplifyframework.core.model.query.Where
 import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.Comment
 import com.amplifyframework.datastore.generated.model.Post
+import com.amplifyframework.datastore.generated.model.PostEditor
 import com.amplifyframework.datastore.generated.model.PostStatus
 import com.amplifyframework.datastore.generated.model.Priority
 import com.amplifyframework.datastore.generated.model.Todo
+import com.amplifyframework.datastore.generated.model.User
 import com.example.taskthreereproduce.ui.theme.TaskThreeReproduceTheme
 import java.util.Date
 import java.util.TimeZone
@@ -84,28 +86,62 @@ fun relationalModelsGuide() {
 //        }
 //    )
 
-    // if delete a parent object,
-    // its children will be removed from the DataStore,
-    // and the mutation would be synced to the cloud.
-    Amplify.DataStore.query(Post::class.java, Where.identifier(Post::class.java, "123"),
+//    // if delete a parent object,
+//    // its children will be removed from the DataStore,
+//    // and the mutation would be synced to the cloud.
+//    Amplify.DataStore.query(Post::class.java, Where.identifier(Post::class.java, "123"),
+//        {
+//            if(it.hasNext()) {
+//                val post = it.next()
+//                Amplify.DataStore.delete(post,
+//                    {
+//                        Log.i("MyAmplifyApp", "Post deleted")
+//                    },
+//                    {
+//                        Log.e("MyAmplifyApp", "Delete failed")
+//                    }
+//                )
+//            }
+//        },
+//        {
+//            Log.e("MyAmplifyApp", "Query failed", it)
+//        }
+//    )
+
+    val post = Post.builder()
+        .title("My First Post")
+        .status(PostStatus.ACTIVE)
+        .build()
+
+    val editor = User.builder()
+        .username("Nadia")
+        .build()
+
+    val postEditor = PostEditor.builder()
+        .post(post)
+        .user(editor)
+        .build()
+
+    Amplify.DataStore.save(post,
         {
-            if(it.hasNext()) {
-                val post = it.next()
-                Amplify.DataStore.delete(post,
-                    {
-                        Log.i("MyAmplifyApp", "Post deleted")
-                    },
-                    {
-                        Log.e("MyAmplifyApp", "Delete failed")
-                    }
-                )
-            }
+            Log.i("MyAmplifyApp", "Post saved")
+            Amplify.DataStore.save(editor,
+                {
+                    Log.i("MyAmplifyApp", "Editor saved")
+                    Amplify.DataStore.save(postEditor,
+                        { Log.i("MyAmplifyApp", "PostEditor saved") },
+                        { Log.e("MyAmplifyApp", "PostEditor not saved") }
+                    )
+                },
+                {
+                    Log.e("MyAmplifyApp", "Editor not saved", it)
+                }
+            )
         },
         {
-            Log.e("MyAmplifyApp", "Query failed", it)
+            Log.e("MyAmplifyApp", "Post not saved", it)
         }
     )
-
 }
 
 fun dataStoreManipulatingDataGuide() {
