@@ -124,7 +124,21 @@ fun dataStoreManipulatingDataGuide() {
 //        }
 //    )
 
-    
+    Amplify.DataStore.query(
+        Post::class.java,
+        Where.matches(
+            Post.RATING.gt(4).or(Post.STATUS.eq(PostStatus.ACTIVE))
+        ),
+        { posts ->
+            while (posts.hasNext()) {
+                val post = posts.next()
+                Log.i("MyAmplifyApp", "Post: $post")
+            }
+        },
+        {
+            Log.e("MyAmplifyApp", "Query failed", it)
+        }
+    )
 }
 
 fun dataStoreSetupGuide() {
