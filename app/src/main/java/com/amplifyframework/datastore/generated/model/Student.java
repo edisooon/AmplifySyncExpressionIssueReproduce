@@ -29,9 +29,11 @@ public final class Student implements Model {
   public static final QueryField ID = field("Student", "id");
   public static final QueryField NAME = field("Student", "name");
   public static final QueryField YEAR = field("Student", "year");
+  public static final QueryField IS_MALE = field("Student", "isMale");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String name;
   private final @ModelField(targetType="Int", isRequired = true) Integer year;
+  private final @ModelField(targetType="Boolean", isRequired = true) Boolean isMale;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   /** @deprecated This API is internal to Amplify and should not be used. */
@@ -52,6 +54,10 @@ public final class Student implements Model {
       return year;
   }
   
+  public Boolean getIsMale() {
+      return isMale;
+  }
+  
   public Temporal.DateTime getCreatedAt() {
       return createdAt;
   }
@@ -60,10 +66,11 @@ public final class Student implements Model {
       return updatedAt;
   }
   
-  private Student(String id, String name, Integer year) {
+  private Student(String id, String name, Integer year, Boolean isMale) {
     this.id = id;
     this.name = name;
     this.year = year;
+    this.isMale = isMale;
   }
   
   @Override
@@ -77,6 +84,7 @@ public final class Student implements Model {
       return ObjectsCompat.equals(getId(), student.getId()) &&
               ObjectsCompat.equals(getName(), student.getName()) &&
               ObjectsCompat.equals(getYear(), student.getYear()) &&
+              ObjectsCompat.equals(getIsMale(), student.getIsMale()) &&
               ObjectsCompat.equals(getCreatedAt(), student.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), student.getUpdatedAt());
       }
@@ -88,6 +96,7 @@ public final class Student implements Model {
       .append(getId())
       .append(getName())
       .append(getYear())
+      .append(getIsMale())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -101,6 +110,7 @@ public final class Student implements Model {
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("name=" + String.valueOf(getName()) + ", ")
       .append("year=" + String.valueOf(getYear()) + ", ")
+      .append("isMale=" + String.valueOf(getIsMale()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -123,6 +133,7 @@ public final class Student implements Model {
     return new Student(
       id,
       null,
+      null,
       null
     );
   }
@@ -130,7 +141,8 @@ public final class Student implements Model {
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
       name,
-      year);
+      year,
+      isMale);
   }
   public interface NameStep {
     YearStep name(String name);
@@ -138,7 +150,12 @@ public final class Student implements Model {
   
 
   public interface YearStep {
-    BuildStep year(Integer year);
+    IsMaleStep year(Integer year);
+  }
+  
+
+  public interface IsMaleStep {
+    BuildStep isMale(Boolean isMale);
   }
   
 
@@ -148,18 +165,20 @@ public final class Student implements Model {
   }
   
 
-  public static class Builder implements NameStep, YearStep, BuildStep {
+  public static class Builder implements NameStep, YearStep, IsMaleStep, BuildStep {
     private String id;
     private String name;
     private Integer year;
+    private Boolean isMale;
     public Builder() {
       
     }
     
-    private Builder(String id, String name, Integer year) {
+    private Builder(String id, String name, Integer year, Boolean isMale) {
       this.id = id;
       this.name = name;
       this.year = year;
+      this.isMale = isMale;
     }
     
     @Override
@@ -169,7 +188,8 @@ public final class Student implements Model {
         return new Student(
           id,
           name,
-          year);
+          year,
+          isMale);
     }
     
     @Override
@@ -180,9 +200,16 @@ public final class Student implements Model {
     }
     
     @Override
-     public BuildStep year(Integer year) {
+     public IsMaleStep year(Integer year) {
         Objects.requireNonNull(year);
         this.year = year;
+        return this;
+    }
+    
+    @Override
+     public BuildStep isMale(Boolean isMale) {
+        Objects.requireNonNull(isMale);
+        this.isMale = isMale;
         return this;
     }
     
@@ -198,10 +225,11 @@ public final class Student implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String name, Integer year) {
-      super(id, name, year);
+    private CopyOfBuilder(String id, String name, Integer year, Boolean isMale) {
+      super(id, name, year, isMale);
       Objects.requireNonNull(name);
       Objects.requireNonNull(year);
+      Objects.requireNonNull(isMale);
     }
     
     @Override
@@ -212,6 +240,11 @@ public final class Student implements Model {
     @Override
      public CopyOfBuilder year(Integer year) {
       return (CopyOfBuilder) super.year(year);
+    }
+    
+    @Override
+     public CopyOfBuilder isMale(Boolean isMale) {
+      return (CopyOfBuilder) super.isMale(isMale);
     }
   }
   
