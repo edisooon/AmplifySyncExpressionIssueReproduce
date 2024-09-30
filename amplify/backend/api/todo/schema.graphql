@@ -14,7 +14,7 @@ type Todo @model @auth(rules: [{ allow: public }]) {
   completedAt: AWSDateTime
 }
 
-type Post @model {
+type Post @model @auth(rules: [{ allow: public }]) {
   id: ID!
   title: String!
   status: PostStatus!
@@ -24,13 +24,13 @@ type Post @model {
   editors: [User] @manyToMany(relationName: "PostEditor")
 }
 
-type User @model {
+type User @model @auth(rules: [{ allow: public }]) {
   id: ID!
   username: String!
   posts: [Post] @manyToMany(relationName: "PostEditor")
 }
 
-type Comment @model {
+type Comment @model @auth(rules: [{ allow: public }]) {
   id: ID!
   postID: ID! @index(name: "byPost")
   post: Post! @belongsTo(fields: ["postID"])
