@@ -41,3 +41,9 @@ enum PostStatus {
   ACTIVE
   INACTIVE
 }
+
+type Student @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  name: String!
+  year: Int!
+}
