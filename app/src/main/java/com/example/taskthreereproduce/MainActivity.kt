@@ -42,15 +42,15 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        getStarted()
+//        getStarted()
 //        dataStoreSetupGuide()
 //        dataStoreManipulatingDataGuide()
 //        relationalModelsGuide()
-//        syncingDataToCloudGuide()
+        reproduceError()
     }
 }
 
-fun syncingDataToCloudGuide() {
+fun reproduceError() {
 
 }
 
