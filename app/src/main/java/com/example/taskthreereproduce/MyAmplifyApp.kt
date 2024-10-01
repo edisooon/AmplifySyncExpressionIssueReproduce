@@ -8,6 +8,7 @@ import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.AWSDataStorePlugin
 import com.amplifyframework.datastore.DataStoreConfiguration
 import com.amplifyframework.datastore.generated.model.Student
+import java.util.concurrent.TimeUnit
 
 class MyAmplifyApp : Application(){
 
@@ -17,6 +18,7 @@ class MyAmplifyApp : Application(){
             Amplify.addPlugin(AWSApiPlugin())
             Amplify.addPlugin(AWSDataStorePlugin.builder().dataStoreConfiguration(
                 DataStoreConfiguration.builder()
+//                    .syncInterval(0, TimeUnit.SECONDS)
                     .syncExpression(Student::class.java) {
                         val predicate = Student.YEAR.ge(StudentFilter.year)
                         StudentFilter.isMale?.let { Student.IS_MALE.eq(StudentFilter.isMale) }

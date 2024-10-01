@@ -21,6 +21,7 @@ import com.amplifyframework.datastore.generated.model.Post
 import com.amplifyframework.datastore.generated.model.PostEditor
 import com.amplifyframework.datastore.generated.model.PostStatus
 import com.amplifyframework.datastore.generated.model.Priority
+import com.amplifyframework.datastore.generated.model.Student
 import com.amplifyframework.datastore.generated.model.Todo
 import com.amplifyframework.datastore.generated.model.User
 import com.example.taskthreereproduce.ui.theme.TaskThreeReproduceTheme
@@ -51,6 +52,48 @@ class MainActivity : ComponentActivity() {
 }
 
 fun reproduceError() {
+    // create students
+//    val student = Student.builder()
+//        .name("B")
+//        .year(2001)
+//        .isMale(true)
+//        .build()
+//    Amplify.DataStore.save(student,
+//        {
+//            Log.i("MyApp", "student saved")
+//        },
+//        {
+//            Log.e("MyApp", "save failed", it)
+//        }
+//    )
+
+    // pull student
+    StudentFilter.year = 1997
+    Amplify.DataStore.stop(
+        {
+//            Amplify.DataStore.query(Student::class.java,
+//                { matches ->
+//                    while (matches.hasNext()) {
+//                        val student = matches.next()
+//                        Log.i("MyAmplifyApp", "Student: ${student.name}")
+//                        Log.i("MyAmplifyApp", "Student's year: ${student.year}")
+//                        Log.i("MyAmplifyApp", "Student is male: ${student.isMale}")
+//                    }
+//                },
+//                {
+//                    Log.e("MyAmplifyApp", "Query failed", it)
+//                }
+//            )
+            Amplify.DataStore.start(
+                { Log.i("MyAmplifyApp", "DataStoreStarted") },
+                { Log.e("MyAmplifyApp", "Error starting DataStore") }
+            )
+        },
+        {
+            Log.e("MyAmplifyApp", "Error stopping DataStore: ", it)
+        }
+    )
+
 
 }
 
