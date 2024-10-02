@@ -68,22 +68,30 @@ fun reproduceError() {
 //    )
 
     // pull student
-    StudentFilter.year = 1997
+
+//    Amplify.DataStore.clear(
+//        {
+//            Log.i("MyAmplifyApp", "DataStore cleared")
+//        },
+//        {
+//            Log.e("MyAmplifyApp", "Error clearing DataStore")
+//        }
+//    )
+
+//    Amplify.DataStore.clear(
+//        {
+//            Amplify.DataStore.start(
+//                { Log.i("MyAmplifyApp", "DataStoreStarted") },
+//                { Log.e("MyAmplifyApp", "Error starting DataStore") }
+//            )
+//        },
+//        {
+//            Log.e("MyAmplifyApp", "Error clearing DataStore: ", it)
+//        }
+//    )
+//
     Amplify.DataStore.stop(
         {
-//            Amplify.DataStore.query(Student::class.java,
-//                { matches ->
-//                    while (matches.hasNext()) {
-//                        val student = matches.next()
-//                        Log.i("MyAmplifyApp", "Student: ${student.name}")
-//                        Log.i("MyAmplifyApp", "Student's year: ${student.year}")
-//                        Log.i("MyAmplifyApp", "Student is male: ${student.isMale}")
-//                    }
-//                },
-//                {
-//                    Log.e("MyAmplifyApp", "Query failed", it)
-//                }
-//            )
             Amplify.DataStore.start(
                 { Log.i("MyAmplifyApp", "DataStoreStarted") },
                 { Log.e("MyAmplifyApp", "Error starting DataStore") }
@@ -94,6 +102,19 @@ fun reproduceError() {
         }
     )
 
+//    Amplify.DataStore.query(Student::class.java,
+//        { matches ->
+//            while (matches.hasNext()) {
+//                val student = matches.next()
+//                Log.i("MyAmplifyApp", "Student: ${student.name}")
+//                Log.i("MyAmplifyApp", "Student's year: ${student.year}")
+//                Log.i("MyAmplifyApp", "Student is male: ${student.isMale}")
+//            }
+//        },
+//        {
+//            Log.e("MyAmplifyApp", "Query failed", it)
+//        }
+//    )
 
 }
 

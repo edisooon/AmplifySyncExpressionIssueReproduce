@@ -20,9 +20,7 @@ class MyAmplifyApp : Application(){
                 DataStoreConfiguration.builder()
 //                    .syncInterval(0, TimeUnit.SECONDS)
                     .syncExpression(Student::class.java) {
-                        val predicate = Student.YEAR.ge(StudentFilter.year)
-                        StudentFilter.isMale?.let { Student.IS_MALE.eq(StudentFilter.isMale) }
-                        predicate
+                        Student.YEAR.ge(StudentFilter.year)
                     }.build()
             ).build())
             Amplify.configure(applicationContext)
