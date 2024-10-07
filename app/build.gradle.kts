@@ -43,7 +43,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
-    packaging {
+    packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
@@ -52,9 +52,11 @@ android {
 
 dependencies {
     // Amplify API and Datastore dependencies
-    implementation("com.amplifyframework:aws-api:2.19.1")
-    implementation("com.amplifyframework:aws-datastore:2.19.1")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
+    implementation(libs.amplify.core)
+    implementation(libs.amplify.datastore)
+    implementation(libs.amplify.api)
+    implementation(libs.amplify.api.appsync)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

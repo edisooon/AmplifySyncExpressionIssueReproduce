@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "TaskThreeReproduce"
 include(":app")
+includeBuild("../amplify-android")
