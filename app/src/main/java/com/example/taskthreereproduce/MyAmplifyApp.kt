@@ -18,7 +18,6 @@ class MyAmplifyApp : Application(){
             Amplify.addPlugin(AWSApiPlugin())
             Amplify.addPlugin(AWSDataStorePlugin.builder().dataStoreConfiguration(
                 DataStoreConfiguration.builder()
-//                    .syncInterval(0, TimeUnit.SECONDS)
                     .syncExpression(Student::class.java) {
                         Student.YEAR.ge(StudentFilter.year)
                     }.build()

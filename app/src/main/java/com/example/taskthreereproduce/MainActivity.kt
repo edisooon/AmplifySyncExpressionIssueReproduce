@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,10 +39,38 @@ class MainActivity : ComponentActivity() {
             TaskThreeReproduceTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Column(Modifier.padding(innerPadding)) {
-
+                        Button(onClick={clearLocalStorage()}) {
+                            Text("Clear")
+                        }
+                        Button(onClick={startSyncing()}) {
+                            Text("Start syncing (>=2004)")
+                        }
+                        Button(onClick={changeSyncExpression()}) {
+                            Text("Change Sync Expression (>=1997)")
+                        }
                     }
                 }
             }
         }
+    }
+
+    private fun startSyncing() {
+        Amplify.DataStore.start({}, {})
+    }
+
+    private fun clearLocalStorage() {
+        Amplify.DataStore.clear({}, {})
+    }
+
+    private fun changeSyncExpression() {
+        StudentFilter.year = 1997
+        Amplify.DataStore.stop(
+            {
+                Amplify.DataStore.start(
+                    {}, {}
+                )
+            },
+            {}
+        )
     }
 }
