@@ -52,7 +52,7 @@ android {
 
 dependencies {
     // Amplify API and Datastore dependencies
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.2")
     implementation(libs.amplify.core)
     implementation(libs.amplify.datastore)
     implementation(libs.amplify.api)

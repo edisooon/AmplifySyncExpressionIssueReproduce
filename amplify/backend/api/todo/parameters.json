@@ -1,5 +1,6 @@
 {
   "AppSyncApiName": "todo",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2024-10-11T21:12:41.899Z"
 }
