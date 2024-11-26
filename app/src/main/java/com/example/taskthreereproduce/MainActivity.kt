@@ -1,6 +1,7 @@
 package com.example.taskthreereproduce
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -35,6 +36,9 @@ class MainActivity : ComponentActivity() {
                         Button(onClick = { changeSyncExpression() }) {
                             Text("Change Sync Expression (>=1997)")
                         }
+                        Button(onClick = { logAllStudents() }) {
+                            Text("Log Local Students")
+                        }
                     }
                 }
             }
@@ -43,7 +47,6 @@ class MainActivity : ComponentActivity() {
 
     private fun startSyncing() {
         Amplify.DataStore.start({}, {})
-        Amplify.DataStore.query(Student::class.java, {}, {})
     }
 
     private fun storeLocalStudent() {
@@ -71,6 +74,25 @@ class MainActivity : ComponentActivity() {
                 )
             },
             {},
+        )
+    }
+
+    private fun logAllStudents() {
+        Amplify.DataStore.query(
+            Student::class.java,
+            {
+                Log.i("Edison", "=== Start Logging ===")
+                if (!it.hasNext()) {
+                    Log.i("Edison", "No student record in local db!")
+                }
+                while (it.hasNext()) {
+                    Log.i("Edison", it.next().toString())
+                }
+                Log.i("Edison", "=== End Logging ===")
+            },
+            {
+                Log.i("Edison", "error when querying student")
+            },
         )
     }
 }
